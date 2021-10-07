@@ -42,6 +42,13 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
+    public Todo createOrUpdate(final Todo todo) {
+        LOG.debug("createOrUpdate : todo={}", todo);
+
+        return todoRepository.save(todo);
+    }
+
+    @Override
     public void delete(final long userId, final long id) {
         LOG.debug("delete : userId={}, id={}", userId, id);
 
@@ -53,13 +60,6 @@ public class TodoServiceImpl implements TodoService {
         } else {
             LOG.warn("delete : userId={}, id={} - record not found", userId , id);
         }
-    }
-
-    @Override
-    public Todo createOrUpdate(final Todo todo) {
-        LOG.debug("createOrUpdate : todo={}", todo);
-
-        return todoRepository.save(todo);
     }
 
 }

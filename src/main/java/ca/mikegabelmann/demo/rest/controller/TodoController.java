@@ -17,6 +17,8 @@ import java.util.Optional;
  */
 @RestController
 public class TodoController {
+    public static final String PATH_FIND_BY_USER = "/user/{userId}/todo";
+
     /** Service for Todo records. */
     private final TodoService todoService;
 
@@ -35,7 +37,7 @@ public class TodoController {
      * @param userId user id
      * @return records
      */
-    @GetMapping(path="/user/{userId}/todo")
+    @GetMapping(path = TodoController.PATH_FIND_BY_USER)
     public ResponseEntity<List<Todo>> findByUser(
             @PathVariable("userId") long userId) {
 
@@ -65,8 +67,12 @@ public class TodoController {
         }
     }
 
-    //TODO: @PostMapping
-
+    /**
+     * Create a record.
+     * @param userId user id
+     * @param todo record
+     * @return record
+     */
     @PostMapping(path="/user/{userId}/todo")
     public ResponseEntity<Todo> create(
             @PathVariable("userId") long userId,

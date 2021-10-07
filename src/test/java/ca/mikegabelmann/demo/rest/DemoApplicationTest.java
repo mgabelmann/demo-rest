@@ -6,8 +6,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class DemoApplicationTest {
 
+	//TODO: implement some tests
+
 	@Test
 	void contextLoads() {
+
 	}
 
 }

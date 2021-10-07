@@ -2,96 +2,119 @@ package ca.mikegabelmann.demo.rest.controller;
 
 import ca.mikegabelmann.demo.rest.persistence.model.Todo;
 import ca.mikegabelmann.demo.rest.service.TodoService;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.hamcrest.Matchers.startsWith;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Test TodoController by mocking Service.
+ *
  * @author mgabe
  */
-@ExtendWith(MockitoExtension.class)
+@WebMvcTest(TodoController.class)
 class TodoControllerTest {
+    @Autowired
+    private MockMvc mvc;
 
-    @Mock
+    @MockBean
     private TodoService todoService;
 
-    @InjectMocks
-    private TodoController controller;
-
-    private List<Todo> records;
+    private Todo todo1;
 
 
     @BeforeEach
-    void setUp() {
-        this.records = Arrays.asList(new Todo(1L, 1L, "", LocalDateTime.now(), null, 1L));
+    void beforeEach() {
+        this.todo1 = new Todo(1L, 1L, "task", LocalDateTime.now(), null, 1L);
     }
 
     @Test
     @DisplayName("findByUserId - with result")
-    void test1_findByUser() {
+    void test1_findByUser() throws Exception {
+        List<Todo> records = Arrays.asList(todo1);
         Mockito.when(todoService.findByUserId(1L)).thenReturn(records);
 
-        ResponseEntity<List<Todo>> results = controller.findByUser(1L);
-
-        Assertions.assertNotNull(results);
-        Assertions.assertEquals(HttpStatus.OK, results.getStatusCode());
-        Assertions.assertEquals(1, results.getBody().size());
-        Assertions.assertEquals(records.get(0), results.getBody().get(0));
+        mvc.perform(get(TodoController.PATH_FIND_BY_USER, 1))
+                .andExpectAll(
+                        status().isOk(),
+                        content().string(startsWith("[{\"id\":1,"))
+                );
     }
 
     @Test
     @DisplayName("findByUserId - without result")
-    void test2_findByUser() {
-        ResponseEntity<List<Todo>> results = controller.findByUser(1L);
-
-        Assertions.assertNotNull(results);
-        Assertions.assertEquals(HttpStatus.OK, results.getStatusCode());
-        Assertions.assertEquals(0, results.getBody().size());
+    void test2_findByUser() throws Exception {
+        mvc.perform(get(TodoController.PATH_FIND_BY_USER, 1))
+                .andExpectAll(
+                        status().isOk(),
+                        content().string(startsWith("[]"))
+                );
     }
 
 
+
+    /* NOTE: refactor these tests since they don't use MVC.
+
     @Test
     @DisplayName("findByUserAndId - with result")
-    void findByUserAndId() {
+    void test1_findByUserAndId() {
+        List<Todo> records = Arrays.asList(todo1);
         Mockito.when(todoService.findByUserIdAndId(1L, 1L)).thenReturn(Optional.of(records.get(0)));
 
         ResponseEntity<Todo> result = controller.findByUserAndId(1L, 1L);
 
-        Assertions.assertNotNull(result);
-        Assertions.assertEquals(HttpStatus.OK, result.getStatusCode());
-        Assertions.assertNotNull(result.getBody());
+        this.validateOK(result);
     }
 
     @Test
+    @DisplayName("findByUserAndId - without result")
+    void test2_findByUserAndId() {
+        ResponseStatusException rse = Assertions.assertThrows(ResponseStatusException.class, () -> controller.findByUserAndId(1L, 1L));
+
+        Assertions.assertEquals(HttpStatus.NOT_FOUND, rse.getStatus());
+    }
+
+    @Test
+    @DisplayName("create - with result")
     void create() {
-        Assertions.fail("TODO");
+        Mockito.when(todoService.createOrUpdate(todo1)).thenReturn(todo1);
+
+        ResponseEntity<Todo> result = controller.create(1L, todo1);
+
+        this.validateOK(result);
     }
 
     @Test
     void update() {
-        Assertions.fail("TODO");
+        Mockito.when(todoService.createOrUpdate(todo1)).thenReturn(todo1);
+
+        ResponseEntity<Todo> result = controller.update(1L, 1L, todo1);
+
+        this.validateOK(result);
     }
 
     @Test
     void delete() {
-        Assertions.fail("TODO");
+        controller.delete(1L, 1L);
     }
 
+    private void validateOK(final ResponseEntity<?> result) {
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(HttpStatus.OK, result.getStatusCode());
+        Assertions.assertNotNull(result.getBody());
+    }
+    */
 }
