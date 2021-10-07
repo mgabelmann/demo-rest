@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +18,7 @@ import java.util.Optional;
 @RestController
 public class TodoController {
     /** Service for Todo records. */
-    private TodoService todoService;
+    private final TodoService todoService;
 
 
     /**

@@ -17,7 +17,7 @@ public class TodoServiceImpl implements TodoService {
     /** Logger. */
     private static final Logger LOG = LogManager.getLogger(TodoServiceImpl.class);
 
-    private TodoRepository todoRepository;
+    private final TodoRepository todoRepository;
 
 
     @Autowired

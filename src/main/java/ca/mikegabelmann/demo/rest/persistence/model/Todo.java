@@ -35,16 +35,20 @@ public class Todo {
 
     /** Default contstructor. */
     public Todo() {
-        this.id = null;
-        this.userId = null;
-        this.task = "";
-        this.createdDtm = LocalDateTime.now();
-        this.completedDtm = null;
-        this.revision = 1L;
+        this(null, null, "", LocalDateTime.now(), null, 1L);
     }
 
     //TODO: add required arguments constructor
-    //TODO: add all arguments constructor
+
+
+    public Todo(Long id, Long userId, String task, LocalDateTime createdDtm, LocalDateTime completedDtm, Long revision) {
+        this.id = id;
+        this.userId = userId;
+        this.task = task;
+        this.createdDtm = createdDtm;
+        this.completedDtm = completedDtm;
+        this.revision = revision;
+    }
 
     public Long getId() {
         return id;
