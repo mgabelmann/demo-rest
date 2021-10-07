@@ -7,24 +7,26 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+
 /**
- *
+ * Search for Todo records.
  * @author mgabe
  */
 @Repository
 public interface TodoRepository extends JpaRepository<Todo, Long> {
+
     /**
-     * Find by user id.
-     * @param userId
-     * @return
+     * Find records by user id.
+     * @param userId user id
+     * @return records
      */
     List<Todo> findByUserId(long userId);
 
     /**
-     *
-     * @param userId
-     * @param id
-     * @return
+     * Find record by userId and record id.
+     * @param userId user id
+     * @param id record id
+     * @return record
      */
     Optional<Todo> findByUserIdAndId(long userId, long id);
 

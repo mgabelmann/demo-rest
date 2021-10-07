@@ -3,11 +3,17 @@ package ca.mikegabelmann.demo.rest.persistence.model;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+/**
+ *
+ * @author mgabe
+ */
 @Entity
 @Table(name = "TODO")
 public class Todo {
     @Id
-    @GeneratedValue()
+    @Column(name = "ID", nullable = false, unique = true)
+    @SequenceGenerator(name = "seq_todo", sequenceName = "todo_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_todo")
     private Long id;
 
     @Column(name = "USER_ID", nullable = false)
@@ -16,19 +22,25 @@ public class Todo {
     @Column(name = "TASK", nullable = false)
     private String task;
 
-    @Column(name = "DATE_CREATED", columnDefinition="TIMESTAMP", nullable = false)
-    private LocalDateTime dateCreated;
+    @Column(name = "CREATED_DTM", columnDefinition="TIMESTAMP", nullable = false)
+    private LocalDateTime createdDtm;
 
-    @Column(name = "DATE_COMPLETED", columnDefinition="TIMESTAMP")
-    private LocalDateTime dateCompleted;
+    @Column(name = "COMPLETED_DTM", columnDefinition="TIMESTAMP")
+    private LocalDateTime completedDtm;
+
+    @Version
+    @Column(name = "REVISION", nullable = false)
+    private Long revision;
+
 
     /** Default contstructor. */
     public Todo() {
         this.id = null;
         this.userId = null;
         this.task = "";
-        this.dateCreated = LocalDateTime.now();
-        this.dateCompleted = null;
+        this.createdDtm = LocalDateTime.now();
+        this.completedDtm = null;
+        this.revision = 1L;
     }
 
     //TODO: add required arguments constructor
@@ -58,20 +70,32 @@ public class Todo {
         this.task = task;
     }
 
-    public LocalDateTime getDateCreated() {
-        return dateCreated;
+    public LocalDateTime getCreatedDtm() {
+        return createdDtm;
     }
 
-    public void setDateCreated(LocalDateTime dateCreated) {
-        this.dateCreated = dateCreated;
+    public void setCreatedDtm(LocalDateTime createdDtm) {
+        this.createdDtm = createdDtm;
     }
 
-    public LocalDateTime getDateCompleted() {
-        return dateCompleted;
+    public LocalDateTime getCompletedDtm() {
+        return completedDtm;
     }
 
-    public void setDateCompleted(LocalDateTime dateCompleted) {
-        this.dateCompleted = dateCompleted;
+    public void setCompletedDtm(LocalDateTime completedDtm) {
+        this.completedDtm = completedDtm;
     }
 
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Todo{");
+        sb.append("id=").append(id);
+        sb.append(", userId=").append(userId);
+        sb.append(", task='").append(task).append('\'');
+        sb.append(", createdDtm=").append(createdDtm);
+        sb.append(", completedDtm=").append(completedDtm);
+        sb.append(", revision=").append(revision);
+        sb.append('}');
+        return sb.toString();
+    }
 }

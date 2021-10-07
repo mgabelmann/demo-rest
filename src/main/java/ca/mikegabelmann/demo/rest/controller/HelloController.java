@@ -1,6 +1,7 @@
 package ca.mikegabelmann.demo.rest.controller;
 
 import ca.mikegabelmann.demo.rest.persistence.model.Address;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+
+/**
+ *
+ * @author mgabe
+ */
 @RestController
 public class HelloController {
     public static final String PATH_HELLO_GET = "/hello";
@@ -23,7 +29,7 @@ public class HelloController {
 
     @GetMapping(path=HelloController.PATH_HELLO_GET, produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> hello() {
-        return new ResponseEntity<String>("Hello World", HttpStatus.OK);
+        return new ResponseEntity<>("Hello World", HttpStatus.OK);
     }
 
     @GetMapping(path=HelloController.PATH_HELLO_BY_NAME_GET, produces=MediaType.APPLICATION_JSON_VALUE)
@@ -37,7 +43,7 @@ public class HelloController {
             message = String.format("Hello %s", name);
         }
 
-        return new ResponseEntity<String>(message, HttpStatus.OK);
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
     @GetMapping(path=HelloController.PATH_GET_ADDRESS, produces=MediaType.APPLICATION_JSON_VALUE)
@@ -51,7 +57,7 @@ public class HelloController {
 
         } else {
             Address address = new Address("#1 Java Way", "Victoria", "V9Z0Y7");
-            return new ResponseEntity<Address>(address, HttpStatus.OK);
+            return new ResponseEntity<>(address, HttpStatus.OK);
         }
     }
 

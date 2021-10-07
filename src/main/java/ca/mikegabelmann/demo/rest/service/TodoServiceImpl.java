@@ -25,24 +25,25 @@ public class TodoServiceImpl implements TodoService {
         this.todoRepository = todoRepository;
     }
 
+    @Transactional(readOnly = true)
     @Override
-    public List<Todo> findByUserId(long userId) {
-        LOG.debug("findByUserId={}", userId);
+    public List<Todo> findByUserId(final long userId) {
+        LOG.debug("findByUserId : userId={}", userId);
 
         return todoRepository.findByUserId(userId);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public Optional<Todo> findByUserIdAndId(long userId, long id) {
-        LOG.debug("findById={} and id={}", userId, id);
+    public Optional<Todo> findByUserIdAndId(final long userId, final long id) {
+        LOG.debug("findByUserIdAndId : userId={}, id={}", userId, id);
 
         return todoRepository.findByUserIdAndId(userId, id);
     }
 
     @Override
-    public void delete(long userId, long id) {
-        LOG.debug("delete userId={} and id={}", userId, id);
+    public void delete(final long userId, final long id) {
+        LOG.debug("delete : userId={}, id={}", userId, id);
 
         Optional<Todo> record = this.findByUserIdAndId(userId, id);
 
@@ -50,12 +51,14 @@ public class TodoServiceImpl implements TodoService {
             todoRepository.delete(record.get());
 
         } else {
-            LOG.warn("DELETE failed: Todo[userId={}, id={}] - not found", userId , id);
+            LOG.warn("delete : userId={}, id={} - record not found", userId , id);
         }
     }
 
     @Override
-    public Todo createOrUpdate(Todo todo) {
+    public Todo createOrUpdate(final Todo todo) {
+        LOG.debug("createOrUpdate : todo={}", todo);
+
         return todoRepository.save(todo);
     }
 

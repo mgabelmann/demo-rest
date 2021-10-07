@@ -12,9 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ *
+ * @author mgabe
+ */
 @RestController
 public class TodoController {
-
+    /** Service for Todo records. */
     private TodoService todoService;
 
 
@@ -27,15 +31,26 @@ public class TodoController {
         this.todoService = todoService;
     }
 
+    /**
+     * Find todo records by user id.
+     * @param userId user id
+     * @return records
+     */
     @GetMapping(path="/user/{userId}/todo")
     public ResponseEntity<List<Todo>> findByUser(
             @PathVariable("userId") long userId) {
 
         List<Todo> records = todoService.findByUserId(userId);
 
-        return new ResponseEntity<List<Todo>>(records, HttpStatus.OK);
+        return new ResponseEntity<>(records, HttpStatus.OK);
     }
 
+    /**
+     * Find todo record by user id and id.
+     * @param userId user id
+     * @param id id
+     * @return record
+     */
     @GetMapping(path="/user/{userId}/todo/{id}")
     public ResponseEntity<Todo> findByUserAndId(
             @PathVariable("userId") long userId,
@@ -44,7 +59,7 @@ public class TodoController {
         Optional<Todo> todo = todoService.findByUserIdAndId(userId, id);
 
         if (todo.isPresent()) {
-            return new ResponseEntity<Todo>(todo.get(), HttpStatus.OK);
+            return new ResponseEntity<>(todo.get(), HttpStatus.OK);
 
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -53,19 +68,55 @@ public class TodoController {
 
     //TODO: @PostMapping
 
-    @PutMapping(path="/user/{userId}/todo")
-    public ResponseEntity<Todo> createOrUpdate(
+    @PostMapping(path="/user/{userId}/todo")
+    public ResponseEntity<Todo> create(
             @PathVariable("userId") long userId,
-            final Todo todo) {
+            @RequestBody Todo todo) {
 
-        return new ResponseEntity<Todo>(todoService.createOrUpdate(todo), HttpStatus.OK);
+        Todo created = todoService.createOrUpdate(todo);
+
+        return new ResponseEntity<>(created, HttpStatus.OK);
     }
 
+    /**
+     * Update Todo record.
+     * @param userId user id
+     * @param id id
+     * @param todo record
+     * @return record
+     */
+    @PutMapping(path="/user/{userId}/todo/{id}")
+    public ResponseEntity<Todo> update(
+            @PathVariable("userId") long userId,
+            @PathVariable("id") long id,
+            @RequestBody Todo todo) {
+
+        /* copy values
+        return todoService.findByUserIdAndId(userId, id)
+                .map(tmp -> {
+                    tmp.setTask(todo.getTask());
+                    tmp.setDateCreated(todo.getDateCreated());
+                    tmp.setDateCompleted(todo.getDateCompleted());
+                    return new ResponseEntity<Todo>(todoService.createOrUpdate(todo), HttpStatus.OK);
+
+                }).orElseGet(() -> {
+                    throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+                });
+        */
+
+        Todo updated = todoService.createOrUpdate(todo);
+        return new ResponseEntity<>(updated, HttpStatus.OK);
+    }
+
+    /**
+     * Delete Todo record.
+     * @param userId user id
+     * @param id id
+     */
     @DeleteMapping("/user/{userId}/todo/{id}")
     public void delete(
             @PathVariable("userId") long userId,
-            @PathVariable("id") long id,
-            final HttpServletRequest request) {
+            @PathVariable("id") long id) {
 
         todoService.delete(userId, id);
     }
