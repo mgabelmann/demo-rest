@@ -41,7 +41,7 @@ public class TodoControllerIT {
     @Test
     @DisplayName("findByUserId - with result")
     void test1_findByUser() throws Exception {
-        mvc.perform(get(TodoController.PATH_FIND_BY_USER, 1))
+        mvc.perform(get(TodoController.PATH_USER_USERID_TODO, 1))
                 .andExpectAll(
                         status().isOk(),
                         content().string(startsWith("[{\"id\":" + todo1.getId() + ","))
@@ -51,7 +51,7 @@ public class TodoControllerIT {
     @Test
     @DisplayName("findByUserId - without result")
     void test2_findByUser() throws Exception {
-        mvc.perform(get(TodoController.PATH_FIND_BY_USER, 0))
+        mvc.perform(get(TodoController.PATH_USER_USERID_TODO, 0))
                 .andExpectAll(
                         status().isOk(),
                         content().string(startsWith("[]"))

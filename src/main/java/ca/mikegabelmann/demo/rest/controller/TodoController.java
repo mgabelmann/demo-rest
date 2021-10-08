@@ -17,7 +17,8 @@ import java.util.Optional;
  */
 @RestController
 public class TodoController {
-    public static final String PATH_FIND_BY_USER = "/user/{userId}/todo";
+    public static final String PATH_USER_USERID_TODO    = "/user/{userId}/todo";
+    public static final String PATH_USER_USERID_TODO_ID = "/user/{userId}/todo/{id}";
 
     /** Service for Todo records. */
     private final TodoService todoService;
@@ -37,7 +38,7 @@ public class TodoController {
      * @param userId user id
      * @return records
      */
-    @GetMapping(path = TodoController.PATH_FIND_BY_USER)
+    @GetMapping(path = TodoController.PATH_USER_USERID_TODO)
     public ResponseEntity<List<Todo>> findByUser(
             @PathVariable("userId") long userId) {
 
@@ -52,7 +53,7 @@ public class TodoController {
      * @param id id
      * @return record
      */
-    @GetMapping(path="/user/{userId}/todo/{id}")
+    @GetMapping(path = TodoController.PATH_USER_USERID_TODO_ID)
     public ResponseEntity<Todo> findByUserAndId(
             @PathVariable("userId") long userId,
             @PathVariable("id") long id) {
@@ -73,7 +74,7 @@ public class TodoController {
      * @param todo record
      * @return record
      */
-    @PostMapping(path="/user/{userId}/todo")
+    @PostMapping(path = TodoController.PATH_USER_USERID_TODO)
     public ResponseEntity<Todo> create(
             @PathVariable("userId") long userId,
             @RequestBody Todo todo) {
@@ -90,7 +91,7 @@ public class TodoController {
      * @param todo record
      * @return record
      */
-    @PutMapping(path="/user/{userId}/todo/{id}")
+    @PutMapping(path = TodoController.PATH_USER_USERID_TODO_ID)
     public ResponseEntity<Todo> update(
             @PathVariable("userId") long userId,
             @PathVariable("id") long id,
@@ -118,7 +119,7 @@ public class TodoController {
      * @param userId user id
      * @param id id
      */
-    @DeleteMapping("/user/{userId}/todo/{id}")
+    @DeleteMapping(path = TodoController.PATH_USER_USERID_TODO_ID)
     public void delete(
             @PathVariable("userId") long userId,
             @PathVariable("id") long id) {

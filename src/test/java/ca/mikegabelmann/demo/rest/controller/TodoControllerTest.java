@@ -45,9 +45,12 @@ class TodoControllerTest {
     @DisplayName("findByUserId - with result")
     void test1_findByUser() throws Exception {
         List<Todo> records = Arrays.asList(todo1);
+        /* NOTE: running the following line in IntelliJ with coverage fails. Why?
+                 List<Todo> records = List.of(todo1);
+         */
         Mockito.when(todoService.findByUserId(1L)).thenReturn(records);
 
-        mvc.perform(get(TodoController.PATH_FIND_BY_USER, 1))
+        mvc.perform(get(TodoController.PATH_USER_USERID_TODO, 1))
                 .andExpectAll(
                         status().isOk(),
                         content().string(startsWith("[{\"id\":1,"))
@@ -57,7 +60,7 @@ class TodoControllerTest {
     @Test
     @DisplayName("findByUserId - without result")
     void test2_findByUser() throws Exception {
-        mvc.perform(get(TodoController.PATH_FIND_BY_USER, 1))
+        mvc.perform(get(TodoController.PATH_USER_USERID_TODO, 1))
                 .andExpectAll(
                         status().isOk(),
                         content().string(startsWith("[]"))
