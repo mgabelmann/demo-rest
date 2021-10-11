@@ -3,16 +3,18 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
+	<!--
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.6.0-M3</version>
-		<relativePath/>
+		<groupId>ca.mikegabelmann.maven</groupId>
+		<artifactId>parent</artifactId>
+		<version>1.0-SNAPSHOT</version>
 	</parent>
+	-->
 
 	<groupId>ca.mikegabelmann</groupId>
 	<artifactId>demo-rest</artifactId>
 	<version>0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 
 	<name>Demo - REST</name>
 	<description>Demonstration project using Spring Boot, REST, and H2 database.</description>
@@ -20,30 +22,49 @@
 	<properties>
 		<maven.compiler.release>16</maven.compiler.release>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<!-- 2.6.0-M3 -->
+		<spring-boot-starter.version>2.5.5</spring-boot-starter.version>
+
+		<maven.test.skip>true</maven.test.skip>
 	</properties>
 
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-
-		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
+			<version>1.4.200</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- NOTE: replacement for javax.xml.bind:jaxb-api:2.3.1 -->
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<version>3.0.0</version>
 			<scope>runtime</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<version>${spring-boot-starter.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+			<version>${spring-boot-starter.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
+			<version>${spring-boot-starter.version}</version>
 			<scope>test</scope>
 		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -60,15 +81,29 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>${spring-boot-starter.version}</version>
+				<configuration>
+					<mainClass>ca.mikegabelmann.demo.rest.DemoApplication</mainClass>
+					<layout>ZIP</layout>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>2.22.2</version>
 			</plugin>
 		</plugins>
 	</build>
 
+	<!--
 	<repositories>
 		<repository>
 			<id>spring-milestones</id>
@@ -90,5 +125,5 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
-
+	-->
 </project>
