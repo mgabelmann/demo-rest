@@ -3,13 +3,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<!--
 	<parent>
 		<groupId>ca.mikegabelmann.maven</groupId>
 		<artifactId>parent</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
-	-->
 
 	<groupId>ca.mikegabelmann</groupId>
 	<artifactId>demo-rest</artifactId>
@@ -20,16 +18,11 @@
 	<description>Demonstration project using Spring Boot, REST, and H2 database.</description>
 
 	<properties>
-		<maven.compiler.release>16</maven.compiler.release>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-		<!-- 2.6.0-M3 -->
 		<spring-boot-starter.version>2.5.5</spring-boot-starter.version>
-
-		<maven.test.skip>true</maven.test.skip>
 	</properties>
 
 	<dependencies>
+		<!-- in-memory database, typically used for testing, but works for demonstration purposes too  -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -69,15 +62,7 @@
 
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.1</version>
-				<configuration>
-					<release>${maven.compiler.release}</release>
-				</configuration>
-			</plugin>
-
+			<!-- create springboot uber jar -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -95,35 +80,19 @@
 				</executions>
 			</plugin>
 
+			<!-- integration testing -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
-				<version>2.22.2</version>
+				<configuration>
+					<!-- NOTE: fix for maven-failsafe-plugin not finding classes from the original jar
+					           https://github.com/spring-projects/spring-boot/issues/6254
+					-->
+					<classesDirectory>${project.build.directory}/${project.build.finalName}.jar.original</classesDirectory>
+				</configuration>
 			</plugin>
+
 		</plugins>
 	</build>
 
-	<!--
-	<repositories>
-		<repository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/milestone</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/milestone</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
-	-->
 </project>
