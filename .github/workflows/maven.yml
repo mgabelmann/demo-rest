@@ -8,6 +8,8 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+    
+  workflow_dispatch:
 
 jobs:
   build:
@@ -24,6 +26,8 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B verify --file pom.xml
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
     - name: Cache
       uses: actions/cache@v2.1.6
       with:
