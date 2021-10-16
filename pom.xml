@@ -17,6 +17,12 @@
 	<name>Demo - REST</name>
 	<description>Demonstration project using Spring Boot, REST, and H2 database.</description>
 
+	<scm>
+		<connection>scm:git:https://github.com/mgabelmann/demo-rest.git</connection>
+		<developerConnection>scm:git:https://github.com/mgabelmann/demo-rest.git</developerConnection>
+		<url>https://github.com/mgabelmann/demo-rest</url>
+	</scm>
+
 	<properties>
 		<spring-boot-starter.version>2.5.5</spring-boot-starter.version>
 	</properties>
@@ -34,7 +40,7 @@
 		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-impl</artifactId>
-			<version>3.0.0</version>
+			<version>3.0.1</version>
 			<scope>runtime</scope>
 		</dependency>
 
