@@ -22,9 +22,11 @@ public class Todo {
     @Column(name = "TASK", nullable = false)
     private String task;
 
+    @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "CREATED_DTM", columnDefinition="TIMESTAMP", nullable = false)
     private LocalDateTime createdDtm;
 
+    @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "COMPLETED_DTM", columnDefinition="TIMESTAMP")
     private LocalDateTime completedDtm;
 
@@ -39,8 +41,6 @@ public class Todo {
     }
 
     //TODO: add required arguments constructor
-
-
     public Todo(Long id, Long userId, String task, LocalDateTime createdDtm, LocalDateTime completedDtm, Long revision) {
         this.id = id;
         this.userId = userId;
@@ -102,4 +102,5 @@ public class Todo {
         sb.append('}');
         return sb.toString();
     }
+
 }
