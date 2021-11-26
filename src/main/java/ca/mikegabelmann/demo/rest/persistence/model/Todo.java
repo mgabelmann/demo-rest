@@ -22,11 +22,9 @@ public class Todo {
     @Column(name = "TASK", nullable = false)
     private String task;
 
-    @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "CREATED_DTM", columnDefinition="TIMESTAMP", nullable = false)
     private LocalDateTime createdDtm;
 
-    @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "COMPLETED_DTM", columnDefinition="TIMESTAMP")
     private LocalDateTime completedDtm;
 
