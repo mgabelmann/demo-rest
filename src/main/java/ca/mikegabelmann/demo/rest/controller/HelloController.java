@@ -2,7 +2,6 @@ package ca.mikegabelmann.demo.rest.controller;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +23,7 @@ public class HelloController {
 
     @GetMapping(path=HelloController.PATH_HELLO_GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> hello() {
-        return new ResponseEntity<>("Hello World", HttpStatus.OK);
+        return ResponseEntity.ok("Hello World");
     }
 
     @GetMapping(path=HelloController.PATH_HELLO_BY_NAME_GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -38,7 +37,7 @@ public class HelloController {
             message = String.format("Hello %s", name);
         }
 
-        return new ResponseEntity<>(message, HttpStatus.OK);
+        return ResponseEntity.ok(message);
     }
 
     /*

@@ -40,11 +40,11 @@ public class TodoController {
      */
     @GetMapping(path = TodoController.PATH_USER_USERID_TODO)
     public ResponseEntity<List<Todo>> findByUser(
-            @PathVariable("userId") long userId) {
+        @PathVariable("userId") long userId) {
 
         List<Todo> records = todoService.findByUserId(userId);
 
-        return new ResponseEntity<>(records, HttpStatus.OK);
+        return ResponseEntity.ok(records);
     }
 
     /**
@@ -55,13 +55,13 @@ public class TodoController {
      */
     @GetMapping(path = TodoController.PATH_USER_USERID_TODO_ID)
     public ResponseEntity<Todo> findByUserAndId(
-            @PathVariable("userId") long userId,
-            @PathVariable("id") long id) {
+        @PathVariable("userId") long userId,
+        @PathVariable("id") long id) {
 
         Optional<Todo> todo = todoService.findByUserIdAndId(userId, id);
 
         if (todo.isPresent()) {
-            return new ResponseEntity<>(todo.get(), HttpStatus.OK);
+            return ResponseEntity.ok(todo.get());
 
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -76,12 +76,12 @@ public class TodoController {
      */
     @PostMapping(path = TodoController.PATH_USER_USERID_TODO)
     public ResponseEntity<Todo> create(
-            @PathVariable("userId") long userId,
-            @RequestBody Todo todo) {
+        @PathVariable("userId") long userId,
+        @RequestBody Todo todo) {
 
         Todo created = todoService.createOrUpdate(todo);
 
-        return new ResponseEntity<>(created, HttpStatus.OK);
+        return ResponseEntity.ok(created);
     }
 
     /**
@@ -93,9 +93,9 @@ public class TodoController {
      */
     @PutMapping(path = TodoController.PATH_USER_USERID_TODO_ID)
     public ResponseEntity<Todo> update(
-            @PathVariable("userId") long userId,
-            @PathVariable("id") long id,
-            @RequestBody Todo todo) {
+        @PathVariable("userId") long userId,
+        @PathVariable("id") long id,
+        @RequestBody Todo todo) {
 
         /* copy values
         return todoService.findByUserIdAndId(userId, id)
@@ -111,7 +111,7 @@ public class TodoController {
         */
 
         Todo updated = todoService.createOrUpdate(todo);
-        return new ResponseEntity<>(updated, HttpStatus.OK);
+        return ResponseEntity.ok(updated);
     }
 
     /**
@@ -121,8 +121,8 @@ public class TodoController {
      */
     @DeleteMapping(path = TodoController.PATH_USER_USERID_TODO_ID)
     public void delete(
-            @PathVariable("userId") long userId,
-            @PathVariable("id") long id) {
+        @PathVariable("userId") long userId,
+        @PathVariable("id") long id) {
 
         todoService.delete(userId, id);
     }
