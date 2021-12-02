@@ -13,7 +13,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,7 +41,7 @@ class TodoServiceTest {
     @Test
     @DisplayName("findByUserId - with result")
     void test1_findByUserId() {
-        Mockito.when(todoRepository.findByUserId(1L)).thenReturn(Arrays.asList(todo1));
+        Mockito.when(todoRepository.findByUserId(1L)).thenReturn(List.of(todo1));
 
         List<Todo> result = todoService.findByUserId(1L);
 

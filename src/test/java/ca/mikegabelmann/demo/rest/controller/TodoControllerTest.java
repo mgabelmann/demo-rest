@@ -12,7 +12,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.Matchers.startsWith;
@@ -44,7 +43,7 @@ class TodoControllerTest {
     @Test
     @DisplayName("findByUserId - with result")
     void test1_findByUser() throws Exception {
-        List<Todo> records = Arrays.asList(todo1);
+        List<Todo> records = List.of(todo1);
         /* NOTE: running the following line in IntelliJ with coverage fails. Why?
                  List<Todo> records = List.of(todo1);
          */

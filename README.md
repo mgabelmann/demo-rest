@@ -3,7 +3,7 @@ Spring Boot, Spring Data, REST and H2
 
 ## Project Information
 Simple project that enables a single REST endpoint to demonstrate
-a simple GET, PUT, POST, DELETE operation implementing a full stack
+a simple GET, PUT, POST, DELETE operation implementing a full
 stack server.
 
 ## Local Usage
