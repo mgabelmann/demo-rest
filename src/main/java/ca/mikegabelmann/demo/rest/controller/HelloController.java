@@ -27,7 +27,7 @@ public class HelloController {
     }
 
     @GetMapping(path=HelloController.PATH_HELLO_BY_NAME_GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> helloName(@RequestParam("name") final String name) {
+    public ResponseEntity<String> helloName(@RequestParam(value = "name", required = false) final String name) {
         String message;
 
         if (name == null || "".equals(name)) {

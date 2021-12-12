@@ -12,3 +12,17 @@ local Maven repository or access to the GitHub repository version.
 
 Maybe GitHub will allow anonymous access to the project repository
 in the future.
+
+Access REST endpoints:
+
+    http://localhost:8080/user/1/todo
+    http://localhost:8080/user/2/todo
+
+    http://localhost:8080/user/1/todo/1
+    http://localhost:8080/user/1/todo/2
+    http://localhost:8080/user/2/todo/1
+
+    http://localhost:8080/hello
+
+    http://localhost:8080/helloName
+    http://localhost:8080/helloName?name=Fred
