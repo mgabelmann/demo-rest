@@ -24,7 +24,7 @@
 	</scm>
 
 	<properties>
-		<spring-boot-starter.version>2.6.1</spring-boot-starter.version>
+		<spring-boot-starter.version>2.6.6</spring-boot-starter.version>
 	</properties>
 
 	<dependencies>
