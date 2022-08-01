@@ -24,7 +24,7 @@
 	</scm>
 
 	<properties>
-		<spring-boot-starter.version>2.6.1</spring-boot-starter.version>
+		<spring-boot-starter.version>2.7.2</spring-boot-starter.version>
 	</properties>
 
 	<dependencies>
@@ -39,7 +39,7 @@
 		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-impl</artifactId>
-			<version>3.0.1</version>
+			<version>4.0.0</version>
 			<scope>runtime</scope>
 		</dependency>
 
@@ -89,7 +89,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
-				<version>3.0.0-M5</version>
 				<configuration>
 					<!-- NOTE: fix for maven-failsafe-plugin not finding classes from the original jar
 					           https://github.com/spring-projects/spring-boot/issues/6254
